@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-let headers = {
-    Authorization : `Bearer ${localStorage.getItem('token')}`
-};
+
+console.log(`Bearer ${sessionStorage.getItem('token')}`);
 
 export const getList = (modele) => {
-    
-    // alert( localStorage.getItem('token') );
+    let headers = {
+        Authorization : `Bearer ${sessionStorage.getItem('token')}`
+    };
     return axios.request({
         headers : headers,
         method : "GET",
@@ -15,6 +15,9 @@ export const getList = (modele) => {
 }
 
 export const ajouter = (data, modele) => {
+    let headers = {
+        Authorization : `Bearer ${sessionStorage.getItem('token')}`
+    };
     return axios.request({
         headers : headers,
         method: "POST",
@@ -24,6 +27,9 @@ export const ajouter = (data, modele) => {
 }
 
 export const supprimer = (id, modele) => {
+    let headers = {
+        Authorization : `Bearer ${sessionStorage.getItem('token')}`
+    };
     return axios.request({
         headers : headers,
         method: "DELETE",
@@ -31,3 +37,15 @@ export const supprimer = (id, modele) => {
     });
     // return axios.delete(`${process.env.REACT_APP_API_URL}/api/${modele}/${id}`);
 }
+
+export const executeRequest = ( method, modele, data ) => {
+    let headers = {
+        Authorization : `Bearer ${sessionStorage.getItem('token')}`
+    };
+    return axios.request({
+        headers: headers,
+        method: method,
+        url: `${process.env.REACT_APP_API_URL}/api/${modele}`,
+        data: data
+    });
+};

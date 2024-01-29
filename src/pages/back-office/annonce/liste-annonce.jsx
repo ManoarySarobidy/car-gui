@@ -1,16 +1,54 @@
 import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getList, ajouter, executeRequest } from '../../../services/crud'
+import {useState, useEffect} from 'react';
+import FormDiv from "../../../components/formulaire/form";
+import Select from "../../../components/formulaire/select";
+import Button from "../../../components/button/button";
 
 const ListeAnnonce = () => {
 
     const navigate = useNavigate();
+    const [annonces , setAnnonces] = useState([]);
+    const [annoncesValider , setAnnoncesValider] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleButtonClick = (e, id) => {
         e.preventDefault();
         console.log(id);
-        navigate(`/moteur/type/${id}`);
-    }
+        let url = "annonce/validate/" + id;
+        let data = {
+
+        };
+        executeRequest("PUT" , url, data)
+        .then( setIsLoading(true) ).
+        catch( error => alert(error) );
+    };
+
+    const fetchNotValidateAnnouncement = () => {
+        let modele = "annonce/nonValider";
+        let a = getList( modele );
+        a.then( response => {
+            setAnnonces(response.data)
+        } );
+    };
+
+    const fetchValidateAnnouncement = () => {
+        let modele = "annonce/validate";
+        let a = getList( modele );
+        a.then( response => {
+            setAnnoncesValider(response.data)
+        } );
+    };
+
+
+    useEffect( () => {
+        setIsLoading(true);
+        fetchNotValidateAnnouncement();
+        fetchValidateAnnouncement();
+        setIsLoading(false);
+    }, [isLoading] );
 
     const columns = [
         {
@@ -25,17 +63,21 @@ const ListeAnnonce = () => {
 
         {
             name: "Marque",
-            selector: row => row.voiture.marque.nom
+            selector: row => row.voiture.modele.marque.nom
         },
 
         {
             name: "Modele",
-            selector: row => row.voiture.modele
+            selector: row => row.voiture.modele.nom
         },
 
         {
             name: "Utilisateur",
             selector: row => row.user.nom
+        },
+        {
+            name: "Description",
+            selector: row => row.description
         },
 
         {
@@ -43,6 +85,12 @@ const ListeAnnonce = () => {
             cell: (row) => <Link onClick={(e) => handleButtonClick(e, row.id)}><i className='bi bi-check'></i></Link>,
         }
     ];
+
+    const cols = columns.slice( 0, columns.length - 1);
+    cols.push({
+        name : "Prix",
+        selector: row => row.prix
+    });
 
     const data = [
         {
@@ -94,17 +142,39 @@ const ListeAnnonce = () => {
     ];
 
     return (
-        <div className="list-annonce">
-            <h2 className='list__label'>Liste des annonces</h2>
-            <DataTable
-                className='table'
-                columns={columns}
-                data={data}
-                pagination
-                fixedHeader
-            >
-            </DataTable>
-        </div>
+        <>
+        <div className="crud" >
+            <div className="list-annonce">
+                <h2 className='list__label'>Liste des annonces Non valides</h2>
+                <DataTable
+                    className='table'
+                    columns={columns}
+                    data={(annonces.length > 0) ? annonces : []}
+                    pagination
+                    fixedHeader
+                >
+                </DataTable>
+                    {/* Information anle vaika no alatsaka eto */}
+            </div>
+    </div>
+    <div className="crud">
+            <div className="list-annonce" style={{
+            marginTop : '1%'
+        }}>
+                <h2 className="list__label"> Liste des annonces valides </h2>
+                <DataTable
+                    className="table"
+                    columns = { cols }
+                    data = { (annoncesValider.length > 0) ? annoncesValider : [] }
+                    pagination
+                    fixedHeader
+                >    
+                </DataTable>
+            </div>
+        
+    </div>
+        
+        </>
     );
 }
 
