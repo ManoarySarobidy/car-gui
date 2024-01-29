@@ -20,7 +20,6 @@ import Transmission from './pages/back-office/transmission/transmission.jsx';
 import Specificite from './pages/back-office/specificite/specificite.jsx';
 import LayoutAutre from './pages/back-office/autre/layout-autre.jsx';
 import useToken from './hooks/useToken.js';
-import { useEffect } from 'react';
 
 function App() {
 
@@ -61,8 +60,8 @@ function App() {
             <Route path='couleur' element={<Crud modele={'couleur'} />} />
             <Route path='caracteristique' element={<Crud modele={'caracteristique'} />} />
           </Route>
+          {/* <Route path='/login' element={<Login />} /> */}
         </Route>
-        {/* <Route path='/login' element={<Login />} />> */}
       </Routes>
   );
 }
