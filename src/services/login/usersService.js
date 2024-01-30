@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:8080/api/users'; 
+const apiUrl = `${process.env.REACT_APP_API_URL}/api/users`; 
 
 const usersService = async (method, endpoint, data) => {
   try {
