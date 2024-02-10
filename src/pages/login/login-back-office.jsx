@@ -24,7 +24,7 @@ const Login = ({ setToken }) => {
             "label": "Mot de passe",
             "type": "password",
             "placeholder": 'Entrer votre mot de passe',
-            "value": "jean!!!"
+            "value": "jean0!!!"
         },
     ];
 
