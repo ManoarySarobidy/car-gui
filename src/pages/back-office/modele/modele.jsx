@@ -42,9 +42,9 @@ const Modele = () => {
     useEffect(() => {
         setIsLoading(true);
         getList('modeles')
-        .then((response) => {
-            let response_data = response.data;
-            let response_inner_data = response_data.data;
+        .then((response) => response.data)
+        .then(response => {
+            let response_inner_data = response.data;
             let modeles = response_inner_data.modeles;
             let m = response_inner_data.marques;
             setData(modeles);
@@ -89,12 +89,6 @@ const Modele = () => {
             name: "Nom",
             selector: row => row.nom
         },
-
-        {
-            name: "Marque",
-            selector: row => row.marque.nom
-        },
-
         {
             name: "Annee",
             selector: row => row.annee

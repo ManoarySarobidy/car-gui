@@ -17,7 +17,7 @@ const ListeAnnonce = () => {
     const handleButtonClick = (e, id) => {
         e.preventDefault();
         console.log(id);
-        let url = "annonce/validate/" + id;
+        let url = "annonces/validate/" + id;
         let data = {
 
         };
@@ -27,7 +27,7 @@ const ListeAnnonce = () => {
     };
 
     const fetchNotValidateAnnouncement = () => {
-        let modele = "annonce/nonValider";
+        let modele = "annonces/nonValider";
         let a = getList( modele );
         a.then( response => {
             setAnnonces(response.data)
@@ -35,7 +35,7 @@ const ListeAnnonce = () => {
     };
 
     const fetchValidateAnnouncement = () => {
-        let modele = "annonce/validate";
+        let modele = "annonces/validate";
         let a = getList( modele );
         a.then( response => {
             setAnnoncesValider(response.data)
@@ -61,10 +61,6 @@ const ListeAnnonce = () => {
             selector: row => row.date
         },
 
-        {
-            name: "Marque",
-            selector: row => row.voiture.modele.marque.nom
-        },
 
         {
             name: "Modele",
