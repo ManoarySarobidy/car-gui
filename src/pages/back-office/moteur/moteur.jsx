@@ -126,10 +126,10 @@ const Moteur = () => {
             name: "Nom",
             selector: row => row.nom
         },
-        {
-            name: "Marque",
-            selector: row => row.marque.nom
-        },
+        // {
+        //     name: "Marque",
+        //     selector: row => row.marque.nom
+        // },
         {
             name: "Boite Vitesse",
             cell: row => <Button onClick={(e) => handleButtonClick(e, row.id)} name={'Voir'} />
